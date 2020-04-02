@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>always be clozing</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="{{ url_for('static', filename='css/skeleton.css') }}" rel="stylesheet">  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h2><b>a</b>lways <b>b</b>e <b>c</b>lozing</h2>
+      </div>
+      <div class="row">
+          <div class="one-third column">
+            <form method="post" action="/">
+              <textarea id="website" name="website" rows="24" cols="30">Paste URL</textarea>
+              <button type="submit" value="submit">Cloze it!</button>
+              {% if options %}
+              <select id="options" name="options">
+                {% for key, value in options.items() %}
+                <option value="{{ key }}">{{ key, value }}</option>
+                {% endfor %}
+              </select>
+              {% endif %}
+            </form>
+          </div>
+          <div class="two-thirds column">
+            {% if cloze %}
+            <textarea id="cloze" name="cloze" rows="24" cols="36">{{ cloze }}</textarea>
+            {% else %}
+            <textarea id="cloze" name="cloze" rows="24" cols="36"></textarea>
+            {% endif %}
+          </div>
+      </div>
+
+    </div>
+
+  </body>
+
+</html>
