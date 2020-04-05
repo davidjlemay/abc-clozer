@@ -10,14 +10,20 @@
   <body>
     <div class="container-fluid">
       <div class="header">
-        <h1><b>a</b>lways <b>b</b>e <b>c</b>lozing</h1>
+        <h1 style="color: darkgoldenrod;"><b>a</b>lways <b>b</b>e <b>c</b>lozing</h1>
       </div>
       <div class="row">
         <div class="col">
           <form method="post" action="/">
+            <label for="website" style="color: darkcyan;">Paste URL here:</label>
+            {% if website %}
+            <input type="text" id="website" name="website" placeholder="{{ website }}" required size="30" pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)">
+            {% else %}
             <input type="text" id="website" name="website" placeholder="Paste URL" required size="30" pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)">
+            {% endif %}
             <input type="submit" value="Cloze it!" />
             {% if options %}
+            <label for="options" style="color: darkcyan;">Part-of-speech chooser:</label>
             <select id="options" name="options">
               {% for key, value in options.items() %}
               <option value="{{ key }}">{{ key, value }}</option>
@@ -25,28 +31,47 @@
             </select>
           </form>
           {% endif %}
-          {% if website %}
-          <p>{{ website }}</p>
-          {% endif %}
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" id="text-tab" data-toggle="tab" href="#text" role="tab" aria-controls="text" aria-selected="true">Text</a>            
+              <a class="nav-link active" id="html-tab" data-toggle="tab" href="#html" role="tab" aria-controls="html" aria-selected="true">Html</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="html-tab" data-toggle="tab" href="#html" role="tab" aria-controls="html" aria-selected="false">Html</a>
+              <a class="nav-link" id="text-tab" data-toggle="tab" href="#text" role="tab" aria-controls="text" aria-selected="false">Text</a>            
             </li>
           </ul>
           <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="text" role="tabpanel" aria-labelledby="text-tab">
-              {% if cloze %}
-              <textarea id="cloze" name="cloze" rows="24" cols="60">{{ cloze }}</textarea>
-              {% else %}
-              <textarea id="cloze" name="cloze" rows="24" cols="60"></textarea>
+            <div class="tab-pane fade show active" id="html" role="tabpanel" aria-labelledby="html-tab">
+              {% if cloze_html %}
+              <form method="POST" action="/score">
+              <div class="row">
+                <div class="col">
+                  <p style="line-height: 2">{{ cloze_html["text"] }}</p>
+                  <input type="submit" value="Score" />
+                  {% if score %}
+                  "%s correct answers out of a total of %s for a score of %s %" % (sum({{ score }}),len({{ score }}),sum({{ score }})/len({{ score }})*100)
+                  {% endif %}
+                </div>
+                <div class="col">
+                  <label for="cloze_html_words" style="color: darkcyan;">Cut (ctl+x) and paste (ctl+v) words below in the right space on the left. Check your answers at the bottom.</label>
+                  <textarea id="cloze_html_words" name="cloze_html_words" rows="12" cols="60">{{ cloze_html["words"] }}</textarea>
+                </div>
+              </div>
+              </form>
               {% endif %}
             </div>
-            <div class="tab-pane fade" id="html" role="tabpanel" aria-labelledby="html-tab">
-              {% if cloze %}
-                <p>{{ cloze }}</p>>
+            <div class="tab-pane fade" id="text" role="tabpanel" aria-labelledby="text-tab">
+              {% if cloze_txt %}
+              <div class="row">
+                <div class="col">
+                  <label for="cloze_html_words" style="color: darkcyan;">Cut (ctl+x) and paste (ctl+v) text and word list into your favorite text editor.</label>
+                  <textarea id="cloze_txt" name="cloze_txt" rows="24" cols="60">{{ cloze_txt["text"] }}</textarea>
+                </div>
+                <div class="col">
+                  <textarea id="cloze_txt_words" name="cloze_txt_words" rows="24" cols="60">{{ cloze_txt["words"] }}</textarea>
+                </div>
+              </div>
+              {% else %}
+              <textarea id="cloze" name="cloze" rows="24" cols="60"></textarea>
               {% endif %}
             </div>
           </div>
@@ -56,5 +81,5 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </body>
-
+<footer><small style="color: cadetblue;">Made with Python, Flask, Bootstrap, and Stanford Natural Language Toolkit by <a href="https://github.com/davidjlemay/abc-clozer">davidjlemay</a></small></footer>
 </html>
