@@ -5,6 +5,8 @@ from markupsafe import Markup
 from bs4 import BeautifulSoup
 
 app = Flask(__name__)
+app.config['DEBUG'] = True
+
 options = json.load(open("static/pos.json", "r"))
 
 @app.route('/', methods=['GET', 'POST'])
@@ -16,7 +18,7 @@ def index():
       website = response.read()
     flag = request.form.get('options')
     cloze = clozer(BeautifulSoup(website, 'html.parser').find_all('p'), flag)
-    return render_template('index.html',cloze=cloze,options=options,website=url)
+    return render_template('index.html',cloze=cloze,options=options,website=url.strip())
   else:
     return render_template('index.html')
 
@@ -24,7 +26,6 @@ def clozer(text, flag):
   clean_text = []
   for i in text:
       if i.string is not None:
-          clean_text.append(i.string)
   text_pos = []
   for i in clean_text:
       if i is not None:
@@ -39,3 +40,6 @@ def clozer(text, flag):
           else:
               clean_string.append(j[0])
   return " ".join(clean_string)
+
+if __name__ == '__main__':
+  app.run()

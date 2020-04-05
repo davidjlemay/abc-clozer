@@ -5,37 +5,56 @@
     <title>always be clozing</title>
     <meta name="description" content="">
     <meta name="author" content="">
-    <link href="{{ url_for('static', filename='css/skeleton.css') }}" rel="stylesheet">  </head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  </head>
   <body>
-    <div class="container">
+    <div class="container-fluid">
       <div class="header">
-        <h2><b>a</b>lways <b>b</b>e <b>c</b>lozing</h2>
+        <h1><b>a</b>lways <b>b</b>e <b>c</b>lozing</h1>
       </div>
       <div class="row">
-          <div class="one-third column">
-            <form method="post" action="/">
-              <textarea id="website" name="website" rows="24" cols="30">Paste URL</textarea>
-              <button type="submit" value="submit">Cloze it!</button>
-              {% if options %}
-              <select id="options" name="options">
-                {% for key, value in options.items() %}
-                <option value="{{ key }}">{{ key, value }}</option>
-                {% endfor %}
-              </select>
+        <div class="col">
+          <form method="post" action="/">
+            <input type="text" id="website" name="website" placeholder="Paste URL" required size="30" pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)">
+            <input type="submit" value="Cloze it!" />
+            {% if options %}
+            <select id="options" name="options">
+              {% for key, value in options.items() %}
+              <option value="{{ key }}">{{ key, value }}</option>
+              {% endfor %}
+            </select>
+          </form>
+          {% endif %}
+          {% if website %}
+          <p>{{ website }}</p>
+          {% endif %}
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="text-tab" data-toggle="tab" href="#text" role="tab" aria-controls="text" aria-selected="true">Text</a>            
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="html-tab" data-toggle="tab" href="#html" role="tab" aria-controls="html" aria-selected="false">Html</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="text" role="tabpanel" aria-labelledby="text-tab">
+              {% if cloze %}
+              <textarea id="cloze" name="cloze" rows="24" cols="60">{{ cloze }}</textarea>
+              {% else %}
+              <textarea id="cloze" name="cloze" rows="24" cols="60"></textarea>
               {% endif %}
-            </form>
+            </div>
+            <div class="tab-pane fade" id="html" role="tabpanel" aria-labelledby="html-tab">
+              {% if cloze %}
+                <p>{{ cloze }}</p>>
+              {% endif %}
+            </div>
           </div>
-          <div class="two-thirds column">
-            {% if cloze %}
-            <textarea id="cloze" name="cloze" rows="24" cols="36">{{ cloze }}</textarea>
-            {% else %}
-            <textarea id="cloze" name="cloze" rows="24" cols="36"></textarea>
-            {% endif %}
-          </div>
+        </div>
       </div>
-
-    </div>
-
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </body>
 
 </html>
