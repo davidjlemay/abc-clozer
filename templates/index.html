@@ -10,7 +10,7 @@
   <body>
     <div class="container-fluid">
       <div class="header">
-        <h1 style="color: darkgoldenrod;"><b>a</b>lways <b>b</b>e <b>c</b>lozing</h1>
+        <h1 style="color: black;"><b>a</b>lways <b>b</b>e <b>c</b>lozing</h1>
       </div>
       <div class="row">
         <div class="col">
@@ -45,11 +45,13 @@
               <form method="POST" action="/score">
               <div class="row">
                 <div class="col">
+                  {% if score %}
+                  <div class="alert alert-info" role="alert">
+                    {{ score }}
+                  </div>
+                  {% endif %}
                   <p style="line-height: 2">{{ cloze_html["text"] }}</p>
                   <input type="submit" value="Score" />
-                  {% if score %}
-                  "%s correct answers out of a total of %s for a score of %s %" % (sum({{ score }}),len({{ score }}),sum({{ score }})/len({{ score }})*100)
-                  {% endif %}
                 </div>
                 <div class="col">
                   <label for="cloze_html_words" style="color: darkcyan;">Cut (ctl+x) and paste (ctl+v) words below in the right space on the left. Check your answers at the bottom.</label>
