@@ -1,5 +1,5 @@
 # abc-clozer
-**Cloze activity builder:** Fill in the blanks, choose your part of speech, copy text or paste urls
+[**Cloze activity builder:**](https://fierce-earth-75583.herokuapp.com/) Fill in the blanks, choose your part of speech, paste url or ~copy text eventually~
 
 A lways<br/>
 
