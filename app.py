@@ -1,4 +1,6 @@
-import urllib, json,redis
+#!usr/bin/env python
+
+import urllib, json,redis, os
 from nltk import word_tokenize, pos_tag
 from flask import Flask, request, render_template, session
 from flask_session import Session
@@ -10,7 +12,7 @@ app.config['DEBUG'] = True
 
 SESSION_TYPE = 'redis'
 SESSION_PERMANENT = False
-SESSION_REDIS = redis.Redis(host='redis://h:pa91b6f303055070d78627975751510b8d73a53afc099ab56cb0c665029ec0fea@ec2-52-203-87-233.compute-1.amazonaws.com', port=12609, db=0)
+SESSION_REDIS = redis.from_url(os.environ.get("REDIS_URL"))
 REDIS_URL = "redis://h:pa91b6f303055070d78627975751510b8d73a53afc099ab56cb0c665029ec0fea@ec2-52-203-87-233.compute-1.amazonaws.com:12609"
 
 app.config.from_object(__name__)
