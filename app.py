@@ -10,7 +10,9 @@ app.config['DEBUG'] = True
 
 SESSION_TYPE = 'redis'
 SESSION_PERMANENT = False
-SESSION_REDIS = redis.Redis(host='https://fierce-earth-75583.herokuapp.com/', port=6379, db=0)
+SESSION_REDIS = redis.Redis(host='redis://h:pa91b6f303055070d78627975751510b8d73a53afc099ab56cb0c665029ec0fea@ec2-52-203-87-233.compute-1.amazonaws.com', port=12609, db=0)
+REDIS_URL = "redis://h:pa91b6f303055070d78627975751510b8d73a53afc099ab56cb0c665029ec0fea@ec2-52-203-87-233.compute-1.amazonaws.com:12609"
+
 app.config.from_object(__name__)
 
 app.secret_key = b'watermelon'
