@@ -4,7 +4,6 @@ import urllib, json,redis, os
 from nltk import word_tokenize, pos_tag
 from flask import Flask, request, render_template, session
 from flask_session import Session
-from markupsafe import Markup, escape
 from bs4 import BeautifulSoup
 
 app = Flask(__name__)
@@ -13,7 +12,6 @@ app.config['DEBUG'] = True
 SESSION_TYPE = 'redis'
 SESSION_PERMANENT = False
 SESSION_REDIS = redis.from_url(os.environ.get("REDIS_URL"))
-REDIS_URL = "redis://h:pa91b6f303055070d78627975751510b8d73a53afc099ab56cb0c665029ec0fea@ec2-52-203-87-233.compute-1.amazonaws.com:12609"
 
 app.config.from_object(__name__)
 
@@ -102,7 +100,7 @@ def clozer_html(text, flag):
           else:
             clean_string.append(j[0])
   session['true_values'] = word_list
-  return {"text": Markup(" ".join(clean_string)), "words": ", ".join(sorted(word_list))}
+  return {"text": " ".join(clean_string), "words": ", ".join(sorted(word_list))}
 
 if __name__ == '__main__':
   app.run(threaded=True, port=5000)

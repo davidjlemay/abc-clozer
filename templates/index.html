@@ -50,7 +50,7 @@
                     {{ score }}
                   </div>
                   {% endif %}
-                  <p style="line-height: 2">{{ cloze_html["text"] }}</p>
+                  <p style="line-height: 2">{{ cloze_html["text"] | safe }}</p>
                   <input type="submit" value="Score" />
                 </div>
                 <div class="col">
